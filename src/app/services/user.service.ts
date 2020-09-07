@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 declare const gapi: any;
 
@@ -18,11 +19,20 @@ const base_url = environment.base_url;
 export class UserService {
 
   public auth2: any;
+  public user: User;
 
   constructor( private http: HttpClient,
                private router: Router,
                private ngZone: NgZone ) {
-    this.googleInit().then( undefined );
+    this.googleInit();
+  }
+
+  get token(): string {
+    return localStorage.getItem( 'token' ) || '';
+  }
+
+  get uid(): string {
+    return this.user.uid || '';
   }
 
 
@@ -55,17 +65,28 @@ export class UserService {
 
 
   validateToken(): any {
-    const token = localStorage.getItem( 'token' ) || '';
 
+    console.log(this.token);
     return this.http.get( `${ base_url }/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     } ).pipe(
-      tap( ( resp: any ) => {
+      map( ( resp: any ) => {
+
+        const {
+          email,
+          google,
+          name,
+          role,
+          img = '',
+          uid
+        } = resp.user;
+
+        this.user = new User( name, email, '', role, google, img, uid );
         localStorage.setItem( 'token', resp.token );
+        return true;
       } ),
-      map( () => true ),
       catchError( () => of( false ) )
     );
   }
@@ -80,6 +101,20 @@ export class UserService {
                  } )
                );
 
+  }
+
+  updateProfile( data: { email: string, name: string, role: string } ): Observable<any> {
+
+    data = {
+      ...data,
+      role: this.user.role
+    };
+
+    return this.http.put( `${ base_url }/users/${ this.uid }`, data, {
+      headers: {
+        'x-token': this.token
+      }
+    } );
   }
 
   login( formData: LoginForm ): Observable<any> {
