@@ -3,18 +3,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IncreasingComponent } from './increasing/increasing.component';
 import { DoughnutComponent } from './doughnut/doughnut.component';
-import {ChartsModule} from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts';
+import { ModalImageComponent } from './modal-image/modal-image.component';
 
 
-
-
-@NgModule({
-  declarations: [IncreasingComponent, DoughnutComponent],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ChartsModule
-    ],
-  exports: [IncreasingComponent, DoughnutComponent]
-})
-export class ComponentsModule { }
+@NgModule( {
+             declarations: [ IncreasingComponent, DoughnutComponent, ModalImageComponent ],
+             imports: [
+               CommonModule,
+               FormsModule,
+               ChartsModule
+             ],
+             exports: [ IncreasingComponent, DoughnutComponent, ModalImageComponent ]
+           } )
+export class ComponentsModule {
+}

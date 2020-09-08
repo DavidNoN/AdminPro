@@ -8,7 +8,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
-
+import { PipesModule } from '../pipes/pipes.module';
 
 // Components
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,6 +19,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenances/users/users.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
+import { MedicsComponent } from './maintenances/medics/medics.component';
+import { MedicComponent } from './maintenances/medics/medic.component';
+
 
 
 
@@ -35,7 +40,11 @@ import { ProfileComponent } from './profile/profile.component';
     AccountSettingsComponent,
     PromisesComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsersComponent,
+    HospitalsComponent,
+    MedicsComponent,
+    MedicComponent
   ],
   imports: [
     FormsModule,
@@ -44,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     ComponentsModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     ProgressComponent,

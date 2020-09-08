@@ -11,6 +11,10 @@ import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenances/users/users.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
+import { MedicsComponent } from './maintenances/medics/medics.component';
+import { MedicComponent } from './maintenances/medics/medic.component';
 
 
 export const routes: Routes = [
@@ -25,7 +29,13 @@ export const routes: Routes = [
       { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
       { path: 'promises', component: PromisesComponent, data: { title: 'Promises' } },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' } },
-      { path: 'profile', component: ProfileComponent, data: { title: 'User Profile' } }
+      { path: 'profile', component: ProfileComponent, data: { title: 'User Profile' } },
+
+      // Maintenances
+      { path: 'users', component: UsersComponent, data: { title: 'Maintenance for users' } },
+      { path: 'hospitals', component: HospitalsComponent, data: { title: 'Maintenance for hospitals' } },
+      { path: 'medics', component: MedicsComponent, data: { title: 'Maintenance for medics' } },
+      { path: 'medic/:id', component: MedicComponent, data: { title: 'Maintenance for medics' } }
     ],
   },
 ];
