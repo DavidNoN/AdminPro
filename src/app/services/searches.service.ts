@@ -48,6 +48,12 @@ export class SearchesService {
     return results;
   }
 
+
+  globalSearch( term: string ): Observable<any> {
+    const url = `${ base_url }/todo/${ term }`;
+    return this.http.get<any[]>( url, this.headers );
+  }
+
   search( type: 'users' | 'medics' | 'hospitals',
           term: string ): Observable<any> {
     const url = `${ base_url }/todo/collection/${ type }/${ term }`;

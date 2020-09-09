@@ -42,8 +42,6 @@ export class RegisterComponent {
         .subscribe( resp => {
           // Navigate to Dashboard
           this.router.navigateByUrl( '/login' );
-        }, async ( err ) => {
-          await Swal.fire( 'Error', err.error.msg, 'error' );
         } );
   }
 

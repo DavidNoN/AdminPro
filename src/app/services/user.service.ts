@@ -8,6 +8,7 @@ import { catchError, delay, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { LoadUser } from '../interfaces/load-users.interface';
+import Swal from 'sweetalert2';
 
 declare const gapi: any;
 
@@ -36,6 +37,10 @@ export class UserService {
     return this.user.uid || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role;
+  }
+
   get headers(): any {
     return {
       headers: {
@@ -60,8 +65,15 @@ export class UserService {
 
   }
 
+  saveLocalStorage( token: string, menu: any ): void {
+    localStorage.setItem( 'token', token );
+    localStorage.setItem( 'menu', JSON.stringify( menu ) );
+  }
+
   logout(): void {
     localStorage.removeItem( 'token' );
+
+    localStorage.removeItem( 'menu' );
 
     this.auth2.signOut().then( () => {
 
@@ -92,7 +104,9 @@ export class UserService {
         } = resp.user;
 
         this.user = new User( name, email, '', role, google, img, uid );
-        localStorage.setItem( 'token', resp.token );
+
+        this.saveLocalStorage( resp.token, resp.menu );
+
         return true;
       } ),
       catchError( () => of( false ) )
@@ -105,7 +119,9 @@ export class UserService {
     return this.http.post( `${ base_url }/users`, formData )
                .pipe(
                  tap( ( resp: any ) => {
-                   localStorage.setItem( 'token', resp.token );
+                   this.saveLocalStorage( resp.token, resp.menu );
+                 }, error => {
+                   Swal.fire( error.error.msg, error.error.msg, 'error');
                  } )
                );
 
@@ -126,8 +142,10 @@ export class UserService {
     return this.http.post( `${ base_url }/login`, formData )
                .pipe(
                  tap( ( resp: any ) => {
-                   localStorage.setItem( 'token', resp.token );
-                 } )
+                   this.saveLocalStorage( resp.token, resp.menu );
+                 }, error => {
+                   Swal.fire( error.error.msg, error.error.msg, 'error');
+                      } )
                );
 
   }
@@ -137,7 +155,7 @@ export class UserService {
     return this.http.post( `${ base_url }/login/google`, { token } )
                .pipe(
                  tap( ( resp: any ) => {
-                   localStorage.setItem( 'token', resp.token );
+                   this.saveLocalStorage( resp.token, resp.menu );
                  } )
                );
 

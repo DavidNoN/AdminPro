@@ -46,9 +46,15 @@
         <!-- ============================================================== -->
         <li class="nav-item hidden-xs-down search-box"><a class="nav-link hidden-sm-down waves-effect waves-dark"
                                                           href="javascript:void(0)"><i class="ti-search"></i></a>
-          <form class="app-search">
-            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i
-            class="ti-close"></i></a></form>
+          <form class="app-search" (ngSubmit)="search(txtTerm.value)">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search medic hospital or user"
+                   #txtTerm>
+            <a class="srh-btn">
+              <i class="ti-close"></i>
+            </a>
+          </form>
         </li>
         <!-- ============================================================== -->
         <!-- Comment -->
@@ -287,7 +293,7 @@
              aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
           <div class="dropdown-menu dropdown-menu-right animated bounceInDown fast">
             <a class="dropdown-item" href="#"><i
-            class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i
+              class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i
             class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i
             class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i
             class="flag-icon flag-icon-de"></i> Dutch</a></div>
@@ -311,7 +317,7 @@
                     <h4>{{ user.name }}</h4>
                     <p class="text-muted">
                       {{ user.email | slice:0:20 }}
-                      {{ (user.email.length) > 20 ? '...' : '' }}
+                      {{ ( user.email.length ) > 20 ? '...' : '' }}
                     </p>
                     <a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">
                       View Profile</a></div>
